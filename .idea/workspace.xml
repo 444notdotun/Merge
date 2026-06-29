@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="615a289e-e104-4b33-a5cc-ad7ff955e342" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/DSA/Collection/src/dsa/MyQueue.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/DSA/Collection/src/dsa/MyQueue2.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/DSA/Collection/test/dsa/MyQueue2Test.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/DSA/Collection/test/dsa/MyQueueTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd_Practice/Bank FE/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd_Practice/Bank FE/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practice/reactClass/first/booklist/src/components/BookList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Practice/reactClass/first/booklist/src/components/BookList.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Class_tasks/HCF.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Class_tasks/LCM.java" beforeDir="false" afterPath="$PROJECT_DIR$/Semicolon/java/Class_tasks/LCM.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/ActualBank/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/ActualBank/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/ActualBank/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/ActualBank/.vscode/settings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/ActualBank/lib/hamcrest-core-1.3.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/ActualBank/lib/junit-4.13.2.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/ActualBank/src/model/Account.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/ActualBank/src/model/Bank.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/ActualBank/src/model/BankCode.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/ActualBank/src/model/Transaction.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/ActualBank/src/model/User.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/ActualBank/test/model/AccountTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/ActualBank/test/model/BankTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/ActualBank/test/model/UserTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankSystem/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankSystem/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankSystem/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankSystem/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankSystem/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankSystem/BankSystem.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankSystem/src/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankSystem/src/controller/BankingController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankSystem/src/dto/request/CreateAccountRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankSystem/src/dto/request/CreateCustomerRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankSystem/src/dto/request/TransferRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankSystem/src/dto/response/AccountResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankSystem/src/dto/response/TransactionResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankSystem/src/model/Account.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankSystem/src/model/Bank.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankSystem/src/model/BankCode.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankSystem/src/model/Customer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankSystem/src/model/Transaction.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankSystem/src/model/TransactionStatus.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankSystem/src/model/TransactionType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankSystem/src/repository/AccountRepo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankSystem/src/repository/AccountRepoImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankSystem/src/repository/BankRepo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankSystem/src/repository/BankRepoImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankSystem/src/repository/CustomerRepo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankSystem/src/repository/CustomerRepoImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankSystem/src/repository/TransactionRepo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankSystem/src/repository/TransactionRepoImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankSystem/src/service/AccountService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankSystem/src/service/BankService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankSystem/src/service/CustomerService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankSystem/src/service/TransactionService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankSystem/src/util/generator/NUBANGenerator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankSystem/src/util/generator/ReferenceGenerator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankSystem/src/util/mapper/AccountMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankSystem/src/util/mapper/CustomerMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankSystem/src/util/mapper/TransactionMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankSystem/src/util/validation/CustomerValidator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankSystem/src/util/validation/TransactionValidator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankSystem/src/util/validation/Validator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankingApp/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankingApp/.idea/BankingApp.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankingApp/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankingApp/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankingApp/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankingApp/untitled/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankingApp/untitled/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankingApp/untitled/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankingApp/untitled/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankingApp/untitled/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankingApp/untitled/src/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankingApp/untitled/untitled.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankingApp/untitled1/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankingApp/untitled1/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankingApp/untitled1/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankingApp/untitled1/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankingApp/untitled1/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankingApp/untitled1/src/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/BankingApp/untitled1/untitled1.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/CCValidator/CCValidatorFunctions.java" beforeDir="false" afterPath="$PROJECT_DIR$/Semicolon/java/Home_tasks/CCValidator/CCValidatorFunctions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/MFDS/mfds/mfds.log" beforeDir="false" afterPath="$PROJECT_DIR$/Semicolon/java/Home_tasks/MFDS/mfds/mfds.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/MFDS/mfds/src/main/java/com/mxr/mfds/controller/FuelManagementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Semicolon/java/Home_tasks/MFDS/mfds/src/main/java/com/mxr/mfds/controller/FuelManagementController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/MFDS/mfds/src/main/java/com/mxr/mfds/model/Fuel.java" beforeDir="false" afterPath="$PROJECT_DIR$/Semicolon/java/Home_tasks/MFDS/mfds/src/main/java/com/mxr/mfds/model/Fuel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/MFDS/mfds/src/main/java/com/mxr/mfds/service/FuelService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Semicolon/java/Home_tasks/MFDS/mfds/src/main/java/com/mxr/mfds/service/FuelService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/MFDS/mfds/src/test/java/com/mxr/mfds/model/FuelTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Semicolon/java/Home_tasks/MFDS/mfds/src/test/java/com/mxr/mfds/model/FuelTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/MFDS/mfds/src/test/java/com/mxr/mfds/service/DispensingServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Semicolon/java/Home_tasks/MFDS/mfds/src/test/java/com/mxr/mfds/service/DispensingServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/MoscowDev Java-Tasks main Bank/Account.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/MoscowDev Java-Tasks main Bank/AccountException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/MoscowDev Java-Tasks main Bank/Bank.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/MoscowDev Java-Tasks main Bank/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/MoscowDev Java-Tasks main Bank/validateInsufficientAmountException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/MoscowDev Java-Tasks main Bank/validateNegativeAmountException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankAccount/Banking System Fresh/src/data/model/TransactionStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankAccount/Banking System Fresh/src/data/model/TransactionStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankAccount/Banking System/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankAccount/Banking System/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankAccount/Banking System/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankAccount/Banking System/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankAccount/Banking System/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankAccount/Banking System/banking-system.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankAccount/Banking System/banking-system.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankAccount/Banking System/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankAccount/Banking System/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankAccount/Banking System/src/data/model/Cbn.java" beforeDir="false" afterPath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankAccount/Banking System/src/data/model/Cbn.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankAccount/Banking System/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankAccount/Banking System/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankAccount/Banking System/target/surefire-reports/2026-01-11T20-37-47_540-jvmRun1-commands.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankAccount/Banking System/target/surefire-reports/2026-01-11T20-37-47_540-jvmRun1-events.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankAccount/Banking System/target/surefire-reports/NubanGenerator.NubanGeneratorTest.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankAccount/Banking System/target/surefire-reports/TEST-NubanGenerator.NubanGeneratorTest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankAccount/Banking System/test/java/NubanGenerator/NubanGeneratorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankAccount/Banking System/test/java/NubanGenerator/NubanGeneratorTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankAccount/Banking System/test/java/data/repository/AccountRepositoryImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankAccount/Banking System/test/java/data/repository/AccountRepositoryImplTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankAccount/Banking System/test/java/data/repository/TransactionRepositoryImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankAccount/Banking System/test/java/data/repository/TransactionRepositoryImplTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankAccount/Banking System/test/java/data/repository/UserRepositoryImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankAccount/Banking System/test/java/data/repository/UserRepositoryImplTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankAccount/Banking System/test/java/service/BankServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankAccount/Banking System/test/java/service/BankServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankAccount/Banking System/test/java/service/CbnServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankAccount/Banking System/test/java/service/CbnServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankAccount/Banking System/test/java/service/UserServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankAccount/Banking System/test/java/service/UserServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankingApp/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankingApp/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankingApp/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankingApp/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankingApp/SRC/ATMmachine.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankingApp/SRC/Account.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankingApp/SRC/AccountException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankingApp/SRC/BankingSystem.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankingApp/SRC/validateAccount.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankingApp/SRC/validateAmount.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankingApp/SRC/validateAmountAboveBalance.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankingApp/SRC/validatePasswordException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankingApp/bankingApp.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankingApp/out/production/bankingApp/ATMmachine.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankingApp/out/production/bankingApp/Account.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankingApp/out/production/bankingApp/AccountException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankingApp/out/production/bankingApp/BankingSystem.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankingApp/out/production/bankingApp/validateAccount.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankingApp/out/production/bankingApp/validateAmount.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankingApp/out/production/bankingApp/validateAmountAboveBalance.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankingApp/out/production/bankingApp/validatePasswordException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankingApp/out/test/bankingApp/AccountTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankingApp/out/test/bankingApp/BankingTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankingApp/test/AccountTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semicolon/java/Home_tasks/bankingApp/test/BankingTest.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/Semicolon" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="39DBGXDnzH4rS6xT5PGhEJAx4Lw" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/mxr/Documents/NJ"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-cffe25b9f5b3-intellij.indexing.shared.core-IU-253.28294.334" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="615a289e-e104-4b33-a5cc-ad7ff955e342" name="Changes" comment="" />
+      <created>1770220665434</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1770220665434</updated>
+    </task>
+    <servers />
+  </component>
+</project>
