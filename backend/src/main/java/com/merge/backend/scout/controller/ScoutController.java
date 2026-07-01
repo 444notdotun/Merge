@@ -1,12 +1,8 @@
 package com.merge.backend.scout.controller;
 
-import com.merge.backend.scout.dto.Layer1QuestionsResponse;
-import com.merge.backend.scout.dto.Layer1SubmitRequest;
-import com.merge.backend.scout.dto.Layer1SubmitResponse;
-import com.merge.backend.scout.dto.Layer2ProblemsResponse;
-import com.merge.backend.scout.dto.Layer2SubmitRequest;
-import com.merge.backend.scout.dto.Layer2SubmitResponse;
+import com.merge.backend.scout.dto.*;
 import com.merge.backend.scout.service.AlreadySubmittedException;
+import com.merge.backend.scout.service.NoLayer1SubmissionException;
 import com.merge.backend.scout.service.ScoutService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -72,9 +68,42 @@ public class ScoutController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    /**
+     * SC-03: GET /api/v1/scout/layer-3
+     * Returns the baseline coding task if the student indicated prior experience in Layer 1 (q4).
+     * Returns {@code eligible: false} with no task fields if no prior experience — frontend skips.
+     * Requires Layer 1 and Layer 2 to have been completed first.
+     */
+    @GetMapping("/layer-3")
+    public ResponseEntity<Layer3TaskResponse> getLayer3Task(
+            @AuthenticationPrincipal UserDetails userDetails) {
+        return ResponseEntity.ok(scoutService.getLayer3Task(userDetails.getUsername()));
+    }
+
+    /**
+     * SC-03: POST /api/v1/scout/layer-3/submit
+     * Persists the student's code to scout_assessments.layer3_code.
+     * If the student has no prior coding experience the request is accepted but skipped
+     * ({@code skipped: true}) — layer3_code remains null.
+     */
+    @PostMapping("/layer-3/submit")
+    public ResponseEntity<Layer3SubmitResponse> submitLayer3(
+            @AuthenticationPrincipal UserDetails userDetails,
+            @Valid @RequestBody Layer3SubmitRequest request) {
+        Layer3SubmitResponse response = scoutService.submitLayer3(userDetails.getUsername(), request);
+        HttpStatus status = response.skipped() ? HttpStatus.OK : HttpStatus.CREATED;
+        return ResponseEntity.status(status).body(response);
+    }
+
     @ExceptionHandler(AlreadySubmittedException.class)
     public ResponseEntity<?> handleAlreadySubmitted(AlreadySubmittedException ex) {
         return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(Map.of("error", ex.getMessage()));
+    }
+
+    @ExceptionHandler(NoLayer1SubmissionException.class)
+    public ResponseEntity<?> handleNoLayer1(NoLayer1SubmissionException ex) {
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY)
                 .body(Map.of("error", ex.getMessage()));
     }
 }
