@@ -17,6 +17,8 @@ public interface DrillSubmissionRepository extends JpaRepository<DrillSubmission
     /** Counts previous submissions to determine the next attempt_number. */
     int countByStudentIdAndDrillId(Long studentId, Long drillId);
 
+    Optional<DrillSubmission> findFirstByStudentIdOrderBySubmittedAtDesc(Long studentId);
+
     /** Half-open interval [from, to) — total submissions in a weekly window, for pass-rate calculation. */
     @Query("SELECT COUNT(ds) FROM DrillSubmission ds " +
            "WHERE ds.student.id = :studentId " +
