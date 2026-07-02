@@ -10,4 +10,8 @@ public interface ConceptUnlockRepository extends JpaRepository<ConceptUnlock, Lo
     boolean existsByStudentIdAndConceptId(Long studentId, Long conceptId);
 
     boolean existsByStudentIdAndConceptStageName(Long studentId, String stageName);
+
+    /** Returns the most recently unlocked concept (highest sequence_order) for a student in a stage. */
+    java.util.Optional<ConceptUnlock> findTopByStudentIdAndConceptStageNameOrderByConceptSequenceOrderDesc(
+            Long studentId, String stageName);
 }
