@@ -1,5 +1,6 @@
 package com.merge.backend.assessment.service;
 
+import com.merge.backend.ai.embedding.EmbeddingUpdateService;
 import com.merge.backend.ai.gateway.GeminiGateway;
 import com.merge.backend.assessment.domain.ComprehensionCheck;
 import com.merge.backend.assessment.domain.ComprehensionCheckStatus;
@@ -34,6 +35,7 @@ public class ComprehensionSubmitService {
     private final ProgressionService progressionService;
     private final ConceptUnlockService conceptUnlockService;
     private final BuildUnlockService buildUnlockService;
+    private final EmbeddingUpdateService embeddingUpdateService;
 
     public ComprehensionSubmitService(ComprehensionCheckRepository comprehensionCheckRepository,
                                       DrillCompletionRepository drillCompletionRepository,
@@ -41,7 +43,8 @@ public class ComprehensionSubmitService {
                                       GeminiGateway geminiGateway,
                                       ProgressionService progressionService,
                                       ConceptUnlockService conceptUnlockService,
-                                      BuildUnlockService buildUnlockService) {
+                                      BuildUnlockService buildUnlockService,
+                                      EmbeddingUpdateService embeddingUpdateService) {
         this.comprehensionCheckRepository = comprehensionCheckRepository;
         this.drillCompletionRepository = drillCompletionRepository;
         this.studentRepository = studentRepository;
@@ -49,6 +52,7 @@ public class ComprehensionSubmitService {
         this.progressionService = progressionService;
         this.conceptUnlockService = conceptUnlockService;
         this.buildUnlockService = buildUnlockService;
+        this.embeddingUpdateService = embeddingUpdateService;
     }
 
     /**
@@ -141,6 +145,10 @@ public class ComprehensionSubmitService {
         // Check both build-unlock conditions simultaneously: all stage drills passed + XP threshold.
         // XP was just awarded above, so student.totalXp is current at the point of this check.
         buildUnlockService.checkAndUnlock(student, student.getCurrentStage());
+
+        // Refresh the personalisation embedding so context retrieval reflects this interaction.
+        // EmbeddingUpdateService catches Gemini failures internally; no risk of rolling back the drill pass.
+        embeddingUpdateService.triggerPersonalisationEmbeddingUpdate(student.getId());
 
         return ComprehensionSubmitResponse.passed(xpAwarded);
     }
