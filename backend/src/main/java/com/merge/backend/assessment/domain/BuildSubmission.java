@@ -66,6 +66,15 @@ public class BuildSubmission {
     @Column(name = "pending_xp", nullable = false)
     private int pendingXp;
 
+    /**
+     * Whether Gate 1 (JUDGE0 against hidden test suite) passed.
+     * Gate 1 must be true for any XP to be awarded — it is a hard blocker
+     * regardless of other gates' outcomes.
+     * Null until Gate 1 has been evaluated for this submission.
+     */
+    @Column(name = "gate1_passed")
+    private Boolean gate1Passed;
+
     /** Populated once all gates pass and XP has been awarded via ProgressionService. */
     @Column(name = "xp_awarded")
     private Integer xpAwarded;
