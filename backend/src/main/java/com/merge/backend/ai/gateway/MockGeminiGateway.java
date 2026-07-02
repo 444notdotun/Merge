@@ -97,5 +97,37 @@ public class MockGeminiGateway implements GeminiGateway {
         return String.format("Welcome to this %s audiocast on %s. Tailored to your %s approach. Keep learning!",
                 audioType, conceptName, learningApproach);
     }
+
+    @Override
+    public com.merge.backend.feedback.dto.CleanCodeFeedbackResult generateCleanCodeFeedback(String code, String stageName) {
+        if ("CADET".equalsIgnoreCase(stageName)) {
+            return new com.merge.backend.feedback.dto.CleanCodeFeedbackResult(
+                    90,
+                    List.of("L12: Variable 'x' should be descriptive (e.g. 'retryAttempts')."),
+                    List.of(),
+                    List.of(),
+                    List.of(),
+                    false
+            );
+        } else if ("ENGINEER".equalsIgnoreCase(stageName)) {
+            return new com.merge.backend.feedback.dto.CleanCodeFeedbackResult(
+                    80,
+                    List.of("L12: Variable 'x' should be descriptive."),
+                    List.of("L45: Method 'processOrder' is too large (45 lines). Split it."),
+                    List.of("L60: Duplicate loop pattern found in 'calculateTotal'."),
+                    List.of(),
+                    false
+            );
+        } else {
+            return new com.merge.backend.feedback.dto.CleanCodeFeedbackResult(
+                    75,
+                    List.of("L12: Variable 'x' should be descriptive."),
+                    List.of("L45: Method 'processOrder' is too large."),
+                    List.of("L60: Duplicate loop pattern found."),
+                    List.of("L100: Class 'OrderManager' violates Single Responsibility Principle."),
+                    false
+            );
+        }
+    }
 }
 
