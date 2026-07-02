@@ -72,6 +72,14 @@ public class PersonalisationProfile {
     private Instant updatedAt;
 
     /**
+     * Incremented on every AI-driven profile update (PERSONALISATION_UPDATE job).
+     * concept_content rows compare their personalisation_version to this value
+     * to decide whether the cached explanation needs regeneration.
+     */
+    @Column(name = "version", nullable = false)
+    private int version = 1;
+
+    /**
      * pgvector embedding written by AI-06.
      * Stored as vector(768) — requires the pgvector extension on PostgreSQL.
      * Hibernate does not manage this column's type; ensure `CREATE EXTENSION vector`
