@@ -100,6 +100,15 @@ public class BuildSubmission {
     @Column(name = "overall_score")
     private Integer overallScore;
 
+    /**
+     * Whether Gate 4 (Build comprehension check) passed.
+     * Set by BuildComprehensionSubmitService when AI scores the student's answers as passing.
+     * When true, overallStatus is set to PASSED and XP is awarded.
+     * Null until the comprehension check has been submitted and scored.
+     */
+    @Column(name = "gate4_passed")
+    private Boolean gate4Passed;
+
     /** Populated once all gates pass and XP has been awarded via ProgressionService. */
     @Column(name = "xp_awarded")
     private Integer xpAwarded;
