@@ -12,10 +12,9 @@ import com.merge.backend.curriculum.domain.Stage;
 import com.merge.backend.curriculum.repository.StageRepository;
 import com.merge.backend.identity.domain.Student;
 import com.merge.backend.identity.repository.StudentRepository;
+import com.merge.backend.assessment.domain.BuildComprehensionCheck;
 import com.merge.backend.assessment.judge0.Judge0ExecutionService;
 import com.merge.backend.assessment.judge0.Judge0Outcome;
-import com.merge.backend.progression.domain.ActivityType;
-import com.merge.backend.progression.service.ProgressionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -42,8 +41,8 @@ public class BuildSubmitService {
     private final StageRepository stageRepository;
     private final Judge0ExecutionService judge0ExecutionService;
     private final BuildTestSuiteValidator testSuiteValidator;
+    private final BuildComprehensionTriggerService comprehensionTriggerService;
     private final GeminiGateway geminiGateway;
-    private final ProgressionService progressionService;
 
     @Transactional(noRollbackFor = ResponseStatusException.class)
     public BuildSubmitResponse submit(Long buildId, BuildSubmitRequest request, UserDetails userDetails) {
@@ -62,7 +61,7 @@ public class BuildSubmitService {
             List<BuildGateResultDto> gates = buildGateResultRepository
                     .findByBuildSubmissionIdOrderByGateAsc(existing.getId())
                     .stream().map(BuildGateResultDto::from).toList();
-            throw new DuplicateBuildSubmissionException(BuildSubmitResponse.from(existing, gates));
+            throw new DuplicateBuildSubmissionException(BuildSubmitResponse.from(existing, gates, null));
         });
         return doSubmit(buildId, request, userDetails);
     }
@@ -113,16 +112,18 @@ public class BuildSubmitService {
 
         runGates(submission, gateResults, build, stage, request);
 
-        boolean allGatesPassed = gateResults.stream()
-                .allMatch(g -> g.getStatus() == BuildGateStatus.PASSED);
+        // Gates 1–3 are synchronous. Gate 4 (comprehension) is interactive and runs async.
+        // If any synchronous gate failed, the submission is FAILED immediately.
+        // If all pass, stay PENDING until the student submits comprehension answers.
+        boolean syncGatesPassed = Boolean.TRUE.equals(submission.getGate1Passed())
+                && Boolean.TRUE.equals(submission.getGate2Passed())
+                && Boolean.TRUE.equals(submission.getGate3Passed());
 
-        // Gate 1 is a hard blocker: XP is never awarded unless hidden-test execution passed,
-        // regardless of other gates' outcomes.
-        if (Boolean.TRUE.equals(submission.getGate1Passed()) && allGatesPassed) {
-            submission.setOverallStatus(BuildSubmissionStatus.PASSED);
-            int awarded = progressionService.awardXp(student, pendingXp, ActivityType.BUILD_PASS,
-                    build.getStageName(), buildId);
-            submission.setXpAwarded(awarded);
+        Long comprehensionCheckId = null;
+        if (syncGatesPassed) {
+            BuildComprehensionCheck check = comprehensionTriggerService.triggerFor(submission);
+            comprehensionCheckId = check.getId();
+            // overallStatus stays PENDING (set at submission creation) — updated by submit service
         } else {
             submission.setOverallStatus(BuildSubmissionStatus.FAILED);
         }
@@ -132,7 +133,7 @@ public class BuildSubmitService {
 
         List<BuildGateResultDto> gateDtos = gateResults.stream()
                 .map(BuildGateResultDto::from).toList();
-        return BuildSubmitResponse.from(submission, gateDtos);
+        return BuildSubmitResponse.from(submission, gateDtos, comprehensionCheckId);
     }
 
     private void runGates(BuildSubmission submission, List<BuildGateResult> gateResults,
@@ -215,43 +216,8 @@ public class BuildSubmitService {
         submission.setOverallScore(cleanCodeScore);
         buildSubmissionRepository.saveAndFlush(submission);
 
-        // Gate 4 — Architecture review
-        BuildGateResult archResult = findGate(gateResults, BuildGate.ARCHITECTURE);
-        try {
-            boolean passed = geminiGateway.reviewBuildArchitecture(new BuildArchitectureReviewRequest(
-                    request.architectureDocument(),
-                    build.getPrd(),
-                    build.getRequirements(),
-                    build.getConstraints()
-            ));
-            if (passed) {
-                markPassed(archResult, null);
-            } else {
-                markFailed(archResult, "Architecture document does not sufficiently address the PRD requirements");
-            }
-        } catch (Exception e) {
-            log.warn("Architecture gate threw exception for submission {}: {}", submission.getId(), e.getMessage());
-            markFailed(archResult, "Architecture review unavailable");
-        }
-
-        // Gate 5 — Competency signal
-        BuildGateResult competencyResult = findGate(gateResults, BuildGate.COMPETENCY_SIGNAL);
-        try {
-            boolean passed = geminiGateway.evaluateBuildCompetencySignal(new BuildCompetencySignalRequest(
-                    request.code(),
-                    request.testSuite(),
-                    request.architectureDocument(),
-                    build.getSfiaCompetencies()
-            ));
-            if (passed) {
-                markPassed(competencyResult, null);
-            } else {
-                markFailed(competencyResult, "Submission does not demonstrate the required SFIA competency signals");
-            }
-        } catch (Exception e) {
-            log.warn("Competency gate threw exception for submission {}: {}", submission.getId(), e.getMessage());
-            markFailed(competencyResult, "Competency evaluation unavailable");
-        }
+        // Gates 4–5 (ARCHITECTURE, COMPETENCY_SIGNAL) run after Gate 4 comprehension passes.
+        // They are deferred to future gate tickets and not executed here.
     }
 
     private List<BuildGateResult> initGateResults(BuildSubmission submission) {
