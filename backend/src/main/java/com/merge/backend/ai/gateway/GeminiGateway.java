@@ -133,4 +133,11 @@ public interface GeminiGateway {
      * @return true if the student demonstrated genuine understanding; false otherwise
      */
     boolean scoreBuildComprehensionAnswers(BuildComprehensionScoreRequest request);
+
+    /**
+     * AI-12 — DisengagementCoach: generates a personalised reach-out message referencing
+     * the student's actual journey (recent weekly momentum states) and their last active concept.
+     */
+    String generateDisengagementReachOut(String studentName, String lastActiveConcept, List<String> recentStates);
 }
+

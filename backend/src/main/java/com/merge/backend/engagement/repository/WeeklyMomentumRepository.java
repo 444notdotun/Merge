@@ -15,6 +15,8 @@ import java.util.Optional;
 public interface WeeklyMomentumRepository extends JpaRepository<WeeklyMomentum, Long> {
     Optional<WeeklyMomentum> findByStudentIdAndWeekStart(Long studentId, LocalDate weekStart);
 
+    Optional<WeeklyMomentum> findFirstByStudentIdOrderByWeekStartDesc(Long studentId);
+
     @Modifying
     @Query("UPDATE WeeklyMomentum w SET w.locked = true WHERE w.weekStart >= :startDate AND w.weekStart <= :endDate")
     void lockAllForDateRange(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
