@@ -38,4 +38,16 @@ public class Session {
 
     @Column(name = "started_at", nullable = false)
     private Instant startedAt;
+
+    /** Set by POST /sessions/{id}/end — null while session is in progress. */
+    @Column(name = "ended_at")
+    private Instant endedAt;
+
+    /** Count of drills where comprehension passed during this session. Null while in progress. */
+    @Column(name = "drills_completed")
+    private Integer drillsCompleted;
+
+    /** Total XP awarded to the student during this session. Null while in progress. */
+    @Column(name = "xp_earned")
+    private Integer xpEarned;
 }

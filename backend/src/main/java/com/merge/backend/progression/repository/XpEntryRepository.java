@@ -18,4 +18,11 @@ public interface XpEntryRepository extends JpaRepository<XpEntry, Long> {
             @Param("studentId") Long studentId,
             @Param("stageType") String stageType,
             @Param("activityType") ActivityType activityType);
+
+    @Query("SELECT COALESCE(SUM(e.xpAmount), 0) FROM XpEntry e " +
+           "WHERE e.student.id = :studentId " +
+           "AND e.earnedAt >= :startedAt AND e.earnedAt <= :endedAt")
+    int sumByStudentIdInWindow(@Param("studentId") Long studentId,
+                               @Param("startedAt") java.time.Instant startedAt,
+                               @Param("endedAt") java.time.Instant endedAt);
 }
