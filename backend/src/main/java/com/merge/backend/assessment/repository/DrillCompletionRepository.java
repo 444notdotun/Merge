@@ -53,4 +53,13 @@ public interface DrillCompletionRepository extends JpaRepository<DrillCompletion
     int countPassedInWindow(@Param("studentId") Long studentId,
                             @Param("startedAt") Instant startedAt,
                             @Param("endedAt") Instant endedAt);
+
+    /** Half-open interval [from, to) used for weekly momentum windows. */
+    @Query("SELECT COUNT(dc) FROM DrillCompletion dc " +
+           "WHERE dc.student.id = :studentId " +
+           "AND dc.comprehensionPassed = true " +
+           "AND dc.completedAt >= :from AND dc.completedAt < :to")
+    int countPassedBetween(@Param("studentId") Long studentId,
+                           @Param("from") Instant from,
+                           @Param("to") Instant to);
 }
