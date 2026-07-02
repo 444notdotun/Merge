@@ -145,6 +145,11 @@ public interface GeminiGateway {
      * based on concept, audioType, and student personalization parameters.
      */
     String generateAudioScript(String conceptName, String audioType, String learningApproach, List<String> weakConcepts);
+
+    /**
+     * FB-01 — CleanCodeReviewer prompt: analyzes submitted code against stage rubric.
+     */
+    com.merge.backend.feedback.dto.CleanCodeFeedbackResult generateCleanCodeFeedback(String code, String stageName);
 }
 
 
