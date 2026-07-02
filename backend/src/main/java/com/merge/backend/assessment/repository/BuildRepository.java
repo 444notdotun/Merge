@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface BuildRepository extends JpaRepository<Build, Long> {
 
     Optional<Build> findByStudentIdAndStageName(Long studentId, String stageName);
+
+    boolean existsByStudentIdAndStageNameAndUnlockedTrue(Long studentId, String stageName);
 }
