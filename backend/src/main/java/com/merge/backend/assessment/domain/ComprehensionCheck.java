@@ -52,9 +52,19 @@ public class ComprehensionCheck {
     /**
      * Hard deadline for the student to answer all questions.
      * Computed as triggeredAt + (numQuestions × 10 seconds).
+     * Enforced exclusively on the server — the client timer is visual only.
      */
     @Column(name = "server_deadline", nullable = false)
     private Instant serverDeadline;
+
+    /** Student-submitted answers, stored after the POST /submit call. */
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "answers", columnDefinition = "jsonb")
+    private List<String> answers;
+
+    /** Timestamp recorded by the server when the student's answers arrived. */
+    @Column(name = "submitted_at")
+    private Instant submittedAt;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false, length = 20)

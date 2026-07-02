@@ -2,6 +2,7 @@ package com.merge.backend.ai.gateway;
 
 import com.merge.backend.assessment.dto.ComprehensionQuestion;
 import com.merge.backend.assessment.dto.ComprehensionQuestionsRequest;
+import com.merge.backend.assessment.dto.ComprehensionScoreRequest;
 import com.merge.backend.assessment.dto.GenerateDrillsRequest;
 import com.merge.backend.assessment.dto.GeneratedDrill;
 import com.merge.backend.curriculum.dto.ConceptExplanationRequest;
@@ -50,4 +51,14 @@ public interface GeminiGateway {
      * triggeredAt + (result.size() × 10 seconds).
      */
     List<ComprehensionQuestion> generateComprehensionQuestions(ComprehensionQuestionsRequest request);
+
+    /**
+     * AI-05 — ComprehensionScorer prompt: evaluates the student's answers against
+     * their specific code implementation. Verifies that answers reference concrete details
+     * of the submitted code (variable names, chosen algorithms, data structures).
+     * Generic answers that could apply to any implementation are scored as failed.
+     *
+     * @return true if the student demonstrated genuine understanding; false otherwise
+     */
+    boolean scoreComprehensionAnswers(ComprehensionScoreRequest request);
 }
