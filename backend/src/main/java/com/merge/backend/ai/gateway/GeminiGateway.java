@@ -3,6 +3,8 @@ package com.merge.backend.ai.gateway;
 import com.merge.backend.assessment.dto.BuildArchitectureReviewRequest;
 import com.merge.backend.assessment.dto.BuildCleanCodeReviewRequest;
 import com.merge.backend.assessment.dto.BuildCompetencySignalRequest;
+import com.merge.backend.assessment.dto.BuildComprehensionQuestionsRequest;
+import com.merge.backend.assessment.dto.BuildComprehensionScoreRequest;
 import com.merge.backend.assessment.dto.BuildTestQualityRequest;
 import com.merge.backend.assessment.dto.CleanCodeReviewResult;
 import com.merge.backend.assessment.dto.ComprehensionQuestion;
@@ -101,4 +103,24 @@ public interface GeminiGateway {
      * @return true if competency signals are present; false otherwise
      */
     boolean evaluateBuildCompetencySignal(BuildCompetencySignalRequest request);
+
+    /**
+     * AI-10 — Build ComprehensionWriter: generates questions grounded in the student's specific
+     * Build artefacts — their actual code decisions, architecture choices, and test strategies.
+     * Questions must be unanswerable without reading this exact implementation.
+     *
+     * Always called with fresh context so questions differ across submission attempts.
+     * Caller computes serverDeadline as triggeredAt + (result.size() × 10 seconds).
+     */
+    List<ComprehensionQuestion> generateBuildComprehensionQuestions(
+            BuildComprehensionQuestionsRequest request);
+
+    /**
+     * AI-11 — Build ComprehensionScorer: evaluates the student's answers against their
+     * specific code, architecture document, and test strategies.
+     * Generic answers that could apply to any implementation are scored as failed.
+     *
+     * @return true if the student demonstrated genuine understanding; false otherwise
+     */
+    boolean scoreBuildComprehensionAnswers(BuildComprehensionScoreRequest request);
 }
