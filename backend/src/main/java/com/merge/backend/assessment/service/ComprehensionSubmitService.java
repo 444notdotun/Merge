@@ -126,12 +126,12 @@ public class ComprehensionSubmitService {
         recordDrillCompletion(student, check);
 
         int xpAwarded = progressionService.awardXp(
-                student,
+                student.getId(),
                 DRILL_PASS_XP,
                 ActivityType.DRILL_PASS,
                 student.getCurrentStage(),
                 check.getDrill().getId()
-        );
+        ).awarded();
 
         // Unlock next concept if both drills for this concept now have passing comprehension.
         conceptUnlockService.triggerUnlockIfEligible(student, check.getDrill().getConcept());
