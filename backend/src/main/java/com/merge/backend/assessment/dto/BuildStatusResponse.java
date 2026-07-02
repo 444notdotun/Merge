@@ -3,22 +3,26 @@ package com.merge.backend.assessment.dto;
 import com.merge.backend.assessment.domain.Build;
 
 import java.time.Instant;
+import java.util.List;
 
 public record BuildStatusResponse(
         Long buildId,
         String stageName,
-        String status,
         Instant unlockedAt,
-        String prd
+        String prd,
+        List<String> requirements,
+        List<String> constraints,
+        List<String> sfiaCompetencies
 ) {
     public static BuildStatusResponse from(Build build) {
-        String status = build.getPrd() != null ? "READY" : "GENERATING";
         return new BuildStatusResponse(
                 build.getId(),
                 build.getStageName(),
-                status,
                 build.getUnlockedAt(),
-                build.getPrd()
+                build.getPrd(),
+                build.getRequirements(),
+                build.getConstraints(),
+                build.getSfiaCompetencies()
         );
     }
 }
