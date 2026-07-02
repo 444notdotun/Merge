@@ -41,4 +41,13 @@ public class Stage {
     /** Clean Code feedback rubric applied: NAMING_ONLY | NAMING_SIZE_REDUNDANCY | FULL_SOLID | HUMAN_REVIEW */
     @Column(name = "clean_code_level", nullable = false, length = 30)
     private String cleanCodeLevel;
+
+    /**
+     * Minimum clean-code score (0–100) a Build submission must achieve to pass Gate 3.
+     * Evaluated against the AI-07 (CleanCodeReviewer) score for the submission's rubric level.
+     * DB default 0 lets existing rows survive ALTER TABLE; seed.sql sets per-stage values.
+     */
+    @Column(name = "clean_code_min_score", nullable = false,
+            columnDefinition = "integer not null default 0")
+    private int cleanCodeMinScore;
 }
