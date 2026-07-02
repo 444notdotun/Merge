@@ -103,11 +103,22 @@ public class BuildSubmission {
     /**
      * Whether Gate 4 (Build comprehension check) passed.
      * Set by BuildComprehensionSubmitService when AI scores the student's answers as passing.
-     * When true, overallStatus is set to PASSED and XP is awarded.
      * Null until the comprehension check has been submitted and scored.
      */
     @Column(name = "gate4_passed")
     private Boolean gate4Passed;
+
+    /**
+     * Whether Gate 5 (SFIA competency signal) passed.
+     * AI evaluates both code and architecture document against the SFIA skill descriptors
+     * declared in build.sfia_competencies at the required level.
+     * Pass requires evidence in both artefacts.
+     * Set by BuildComprehensionSubmitService immediately after gate 4 passes.
+     * When true, overallStatus is set to PASSED and XP is awarded.
+     * Null until gate 5 has been evaluated.
+     */
+    @Column(name = "gate5_passed")
+    private Boolean gate5Passed;
 
     /** Populated once all gates pass and XP has been awarded via ProgressionService. */
     @Column(name = "xp_awarded")
