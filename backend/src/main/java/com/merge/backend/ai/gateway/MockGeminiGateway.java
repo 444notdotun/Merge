@@ -97,5 +97,14 @@ public class MockGeminiGateway implements GeminiGateway {
         return String.format("Welcome to this %s audiocast on %s. Tailored to your %s approach. Keep learning!",
                 audioType, conceptName, learningApproach);
     }
+
+    @Override
+    public List<Float> generateEmbedding(String text) {
+        List<Float> vector = new java.util.ArrayList<>(1536);
+        for (int i = 0; i < 1536; i++) {
+            vector.add((float) i / 1536.0f);
+        }
+        return vector;
+    }
 }
 
