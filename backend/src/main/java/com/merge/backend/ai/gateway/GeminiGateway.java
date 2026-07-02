@@ -145,6 +145,15 @@ public interface GeminiGateway {
      * based on concept, audioType, and student personalization parameters.
      */
     String generateAudioScript(String conceptName, String audioType, String learningApproach, List<String> weakConcepts);
+
+    /**
+     * AI-06 — Embedding: generates a 1536-dimensional dense vector from the given text.
+     * Called by EmbeddingUpdateService after every profile write (session end + drill approval)
+     * to populate personalisation_profiles.embedding for pgvector context retrieval.
+     *
+     * @return 1536-element list of floats
+     */
+    List<Float> generateEmbedding(String text);
 }
 
 
