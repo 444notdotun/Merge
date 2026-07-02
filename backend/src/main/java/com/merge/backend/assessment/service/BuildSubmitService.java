@@ -3,6 +3,7 @@ package com.merge.backend.assessment.service;
 import com.merge.backend.ai.gateway.GeminiGateway;
 import com.merge.backend.assessment.domain.*;
 import com.merge.backend.assessment.dto.*;
+import com.merge.backend.assessment.dto.CleanCodeReviewResult;
 import com.merge.backend.assessment.exception.DuplicateBuildSubmissionException;
 import com.merge.backend.assessment.repository.BuildGateResultRepository;
 import com.merge.backend.assessment.repository.BuildRepository;
@@ -183,7 +184,38 @@ public class BuildSubmitService {
         submission.setGate2Passed(gate2Passed);
         buildSubmissionRepository.saveAndFlush(submission);
 
-        // Gate 3 — Architecture review
+        // Gate 3 — CleanCodeReviewer (AI-07): scores code against stage rubric.
+        // Rubric: Cadet=naming only, Engineer=+size+redundancy, Architect=full SOLID.
+        // Pass condition: AI score >= Stage.cleanCodeMinScore (stages.clean_code_min_score).
+        BuildGateResult cleanCodeResult = findGate(gateResults, BuildGate.CLEAN_CODE);
+        boolean gate3Passed = false;
+        int cleanCodeScore = 0;
+        try {
+            CleanCodeReviewResult review = geminiGateway.reviewBuildCleanCode(
+                    new BuildCleanCodeReviewRequest(
+                            request.code(),
+                            stage.getName(),
+                            stage.getCleanCodeLevel()
+                    ));
+            cleanCodeScore = review.score();
+            gate3Passed = cleanCodeScore >= stage.getCleanCodeMinScore();
+            if (gate3Passed) {
+                markPassed(cleanCodeResult, review.feedback());
+            } else {
+                String threshold = "minimum: " + stage.getCleanCodeMinScore()
+                        + ", your score: " + cleanCodeScore;
+                markFailed(cleanCodeResult,
+                        (review.feedback() != null ? review.feedback() + " — " : "") + threshold);
+            }
+        } catch (Exception e) {
+            log.warn("Clean code gate threw exception for submission {}: {}", submission.getId(), e.getMessage());
+            markFailed(cleanCodeResult, "Clean code review unavailable");
+        }
+        submission.setGate3Passed(gate3Passed);
+        submission.setOverallScore(cleanCodeScore);
+        buildSubmissionRepository.saveAndFlush(submission);
+
+        // Gate 4 — Architecture review
         BuildGateResult archResult = findGate(gateResults, BuildGate.ARCHITECTURE);
         try {
             boolean passed = geminiGateway.reviewBuildArchitecture(new BuildArchitectureReviewRequest(
@@ -200,24 +232,6 @@ public class BuildSubmitService {
         } catch (Exception e) {
             log.warn("Architecture gate threw exception for submission {}: {}", submission.getId(), e.getMessage());
             markFailed(archResult, "Architecture review unavailable");
-        }
-
-        // Gate 3 — Clean code
-        BuildGateResult cleanCodeResult = findGate(gateResults, BuildGate.CLEAN_CODE);
-        try {
-            boolean passed = geminiGateway.reviewBuildCleanCode(new BuildCleanCodeReviewRequest(
-                    request.code(),
-                    stage.getName(),
-                    stage.getCleanCodeLevel()
-            ));
-            if (passed) {
-                markPassed(cleanCodeResult, null);
-            } else {
-                markFailed(cleanCodeResult, "Code does not meet the " + stage.getCleanCodeLevel() + " clean-code standard for this stage");
-            }
-        } catch (Exception e) {
-            log.warn("Clean code gate threw exception for submission {}: {}", submission.getId(), e.getMessage());
-            markFailed(cleanCodeResult, "Clean code review unavailable");
         }
 
         // Gate 5 — Competency signal
