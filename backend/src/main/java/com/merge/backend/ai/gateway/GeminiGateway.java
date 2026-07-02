@@ -1,8 +1,12 @@
 package com.merge.backend.ai.gateway;
 
+import com.merge.backend.assessment.dto.GenerateDrillsRequest;
+import com.merge.backend.assessment.dto.GeneratedDrill;
 import com.merge.backend.curriculum.dto.ConceptExplanationRequest;
 import com.merge.backend.personalisation.dto.PersonalisationAiResult;
 import com.merge.backend.personalisation.dto.SessionAnalysisPayload;
+
+import java.util.List;
 
 /**
  * AI-01: Gemini API gateway.
@@ -25,4 +29,12 @@ public interface GeminiGateway {
      * @return the generated explanation text (plain prose, no Markdown headers)
      */
     String generateConceptExplanation(ConceptExplanationRequest request);
+
+    /**
+     * AI-02 — DrillWriter prompt: generates Drill 1 and Drill 2 for a concept,
+     * calibrated to the student's personalisation profile.
+     * Drill 1 is simpler (guided scaffold); Drill 2 raises the difficulty.
+     * Always returns exactly 2 elements ordered by drillNumber.
+     */
+    List<GeneratedDrill> generateDrills(GenerateDrillsRequest request);
 }

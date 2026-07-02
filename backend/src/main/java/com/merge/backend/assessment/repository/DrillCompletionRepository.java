@@ -20,4 +20,7 @@ public interface DrillCompletionRepository extends JpaRepository<DrillCompletion
     int countPassedComprehensionDrillsForConcept(
             @Param("studentId") Long studentId,
             @Param("conceptId") Long conceptId);
+
+    /** Used to gate Drill 2: returns true if student has passed comprehension on a specific drill. */
+    boolean existsByStudentIdAndDrillIdAndComprehensionPassedTrue(Long studentId, Long drillId);
 }
