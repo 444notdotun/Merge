@@ -1,5 +1,7 @@
 package com.merge.backend.ai.gateway;
 
+import com.merge.backend.assessment.dto.ComprehensionQuestion;
+import com.merge.backend.assessment.dto.ComprehensionQuestionsRequest;
 import com.merge.backend.assessment.dto.GenerateDrillsRequest;
 import com.merge.backend.assessment.dto.GeneratedDrill;
 import com.merge.backend.curriculum.dto.ConceptExplanationRequest;
@@ -37,4 +39,15 @@ public interface GeminiGateway {
      * Always returns exactly 2 elements ordered by drillNumber.
      */
     List<GeneratedDrill> generateDrills(GenerateDrillsRequest request);
+
+    /**
+     * AI-04 — ComprehensionWriter prompt: generates questions grounded in the student's
+     * specific implementation — their actual variable names, function choices, and
+     * architectural decisions. Questions must be unanswerable without reading this exact code.
+     *
+     * Always called with fresh context so questions differ across submission attempts.
+     * Returns a list of questions; caller computes serverDeadline as
+     * triggeredAt + (result.size() × 10 seconds).
+     */
+    List<ComprehensionQuestion> generateComprehensionQuestions(ComprehensionQuestionsRequest request);
 }
