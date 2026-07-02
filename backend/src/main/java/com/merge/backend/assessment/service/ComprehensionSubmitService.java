@@ -34,6 +34,8 @@ public class ComprehensionSubmitService {
     private final ProgressionService progressionService;
     private final ConceptUnlockService conceptUnlockService;
     private final BuildUnlockService buildUnlockService;
+    private final com.merge.backend.infrastructure.queue.JobQueueService jobQueueService;
+    private final com.fasterxml.jackson.databind.ObjectMapper objectMapper;
 
     public ComprehensionSubmitService(ComprehensionCheckRepository comprehensionCheckRepository,
                                       DrillCompletionRepository drillCompletionRepository,
@@ -41,7 +43,9 @@ public class ComprehensionSubmitService {
                                       GeminiGateway geminiGateway,
                                       ProgressionService progressionService,
                                       ConceptUnlockService conceptUnlockService,
-                                      BuildUnlockService buildUnlockService) {
+                                      BuildUnlockService buildUnlockService,
+                                      com.merge.backend.infrastructure.queue.JobQueueService jobQueueService,
+                                      com.fasterxml.jackson.databind.ObjectMapper objectMapper) {
         this.comprehensionCheckRepository = comprehensionCheckRepository;
         this.drillCompletionRepository = drillCompletionRepository;
         this.studentRepository = studentRepository;
@@ -49,6 +53,8 @@ public class ComprehensionSubmitService {
         this.progressionService = progressionService;
         this.conceptUnlockService = conceptUnlockService;
         this.buildUnlockService = buildUnlockService;
+        this.jobQueueService = jobQueueService;
+        this.objectMapper = objectMapper;
     }
 
     /**
@@ -122,6 +128,19 @@ public class ComprehensionSubmitService {
 
         check.setStatus(ComprehensionCheckStatus.PASSED);
         comprehensionCheckRepository.save(check);
+
+        // Queue CLEAN_CODE_FEEDBACK job asynchronously (FB-03)
+        try {
+            var payload = new com.merge.backend.feedback.dto.CleanCodeFeedbackPayload();
+            payload.setSubmissionId(check.getDrillSubmission().getId());
+            jobQueueService.enqueue(
+                    com.merge.backend.infrastructure.queue.JobType.CLEAN_CODE_FEEDBACK,
+                    objectMapper.writeValueAsString(payload)
+            );
+        } catch (Exception e) {
+            org.slf4j.LoggerFactory.getLogger(ComprehensionSubmitService.class)
+                    .error("Failed to queue Clean Code feedback job", e);
+        }
 
         recordDrillCompletion(student, check);
 
