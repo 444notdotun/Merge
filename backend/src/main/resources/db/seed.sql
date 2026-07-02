@@ -17,6 +17,13 @@ VALUES
     ('PRINCIPAL',  0,    0,    'FULL_ACCELERATOR',  false, true,  'HUMAN_REVIEW')
 ON CONFLICT (name) DO NOTHING;
 
+-- Backfill clean_code_min_score — idempotent via WHERE clean_code_min_score = 0.
+-- Cadet: naming only (60). Engineer: +size+redundancy (70). Architect: full SOLID (80).
+-- Scout/Principal: 0 (no automated clean-code gate).
+UPDATE stages SET clean_code_min_score = 60 WHERE name = 'CADET'     AND clean_code_min_score = 0;
+UPDATE stages SET clean_code_min_score = 70 WHERE name = 'ENGINEER'  AND clean_code_min_score = 0;
+UPDATE stages SET clean_code_min_score = 80 WHERE name = 'ARCHITECT' AND clean_code_min_score = 0;
+
 -- -----------------------------------------------------------------------------
 -- CADET CONCEPTS  (stage_name = 'CADET' for every row — CU-01 bug fix)
 -- 12 concepts in sequence, each with a real-world failure scenario (FACT).
