@@ -80,12 +80,12 @@ public class PersonalisationProfile {
     private int version = 1;
 
     /**
-     * pgvector embedding written by AI-06.
-     * Stored as vector(768) — requires the pgvector extension on PostgreSQL.
-     * Hibernate does not manage this column's type; ensure `CREATE EXTENSION vector`
-     * is run once and the column is created via migration before first use.
-     * Java representation: JSON-array string e.g. "[0.1,0.2,...]".
+     * 1536-dimensional pgvector embedding written by EmbeddingUpdateService (AI-06).
+     * Updated after every approved Drill submission and session end.
+     * Queried by PersonalisationContextRetriever via cosine distance for RAG context.
+     * Requires the pgvector extension; column created by Hibernate (ddl-auto=update).
+     * Java representation: pgvector literal "[f1,f2,...,f1536]".
      */
-    @Column(name = "embedding", columnDefinition = "vector(768)")
+    @Column(name = "embedding", columnDefinition = "vector(1536)")
     private String embedding;
 }
