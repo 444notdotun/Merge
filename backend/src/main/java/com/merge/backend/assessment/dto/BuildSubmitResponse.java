@@ -13,9 +13,13 @@ public record BuildSubmitResponse(
         int pendingXp,
         Integer xpAwarded,
         Instant submittedAt,
-        List<BuildGateResultDto> gates
+        List<BuildGateResultDto> gates,
+        /** Non-null when gates 1–3 all passed and the comprehension check was triggered. */
+        Long comprehensionCheckId
 ) {
-    public static BuildSubmitResponse from(BuildSubmission submission, List<BuildGateResultDto> gates) {
+    public static BuildSubmitResponse from(BuildSubmission submission,
+                                           List<BuildGateResultDto> gates,
+                                           Long comprehensionCheckId) {
         return new BuildSubmitResponse(
                 submission.getId(),
                 submission.getBuild().getId(),
@@ -24,7 +28,8 @@ public record BuildSubmitResponse(
                 submission.getPendingXp(),
                 submission.getXpAwarded(),
                 submission.getSubmittedAt(),
-                gates
+                gates,
+                comprehensionCheckId
         );
     }
 }
