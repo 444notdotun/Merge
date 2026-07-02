@@ -1,5 +1,7 @@
 package com.merge.backend.assessment.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.merge.backend.ai.gateway.GeminiGateway;
 import com.merge.backend.assessment.domain.*;
 import com.merge.backend.assessment.dto.*;
@@ -15,6 +17,10 @@ import com.merge.backend.identity.repository.StudentRepository;
 import com.merge.backend.assessment.domain.BuildComprehensionCheck;
 import com.merge.backend.assessment.judge0.Judge0ExecutionService;
 import com.merge.backend.assessment.judge0.Judge0Outcome;
+import com.merge.backend.infrastructure.queue.JobQueueService;
+import com.merge.backend.infrastructure.queue.JobType;
+import com.merge.backend.progression.domain.ActivityType;
+import com.merge.backend.progression.service.ProgressionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -32,8 +38,6 @@ import java.util.List;
 @Slf4j
 public class BuildSubmitService {
 
-    private static final int BASE_BUILD_XP = 200;
-
     private final BuildRepository buildRepository;
     private final BuildSubmissionRepository buildSubmissionRepository;
     private final BuildGateResultRepository buildGateResultRepository;
@@ -43,6 +47,9 @@ public class BuildSubmitService {
     private final BuildTestSuiteValidator testSuiteValidator;
     private final BuildComprehensionTriggerService comprehensionTriggerService;
     private final GeminiGateway geminiGateway;
+    private final ProgressionService progressionService;
+    private final JobQueueService jobQueueService;
+    private final ObjectMapper objectMapper;
 
     @Transactional(noRollbackFor = ResponseStatusException.class)
     public BuildSubmitResponse submit(Long buildId, BuildSubmitRequest request, UserDetails userDetails) {
@@ -112,20 +119,32 @@ public class BuildSubmitService {
 
         runGates(submission, gateResults, build, stage, request);
 
-        // Gates 1–3 are synchronous. Gate 4 (comprehension) is interactive and runs async.
-        // If any synchronous gate failed, the submission is FAILED immediately.
-        // If all pass, stay PENDING until the student submits comprehension answers.
-        boolean syncGatesPassed = Boolean.TRUE.equals(submission.getGate1Passed())
-                && Boolean.TRUE.equals(submission.getGate2Passed())
-                && Boolean.TRUE.equals(submission.getGate3Passed());
+        boolean gate1Passed = Boolean.TRUE.equals(submission.getGate1Passed());
+        boolean gate2Passed = Boolean.TRUE.equals(submission.getGate2Passed());
+        boolean gate3Passed = Boolean.TRUE.equals(submission.getGate3Passed());
 
         Long comprehensionCheckId = null;
-        if (syncGatesPassed) {
+
+        if (!gate1Passed || !gate2Passed) {
+            // Gates 1 and 2 are hard requirements — no tier, no XP.
+            submission.setOverallStatus(BuildSubmissionStatus.FAILED);
+
+        } else if (!gate3Passed) {
+            // MINIMUM tier: gates 1+2 passed, gate 3 failed. Award 150 XP × decay immediately.
+            // The comprehension check is not triggered; this is the terminal evaluation point.
+            int xp = progressionService.awardXp(student,
+                    BuildPassTier.MINIMUM.computeXp(attemptNumber),
+                    ActivityType.BUILD_PASS, build.getStageName(), buildId);
+            submission.setTier(BuildPassTier.MINIMUM.name());
+            submission.setXpAwarded(xp);
+            submission.setOverallStatus(BuildSubmissionStatus.PASSED);
+            enqueuePassJobs(submission);
+
+        } else {
+            // Gates 1+2+3 all passed — trigger comprehension (gate 4).
+            // Overall status stays PENDING until the student submits comprehension answers.
             BuildComprehensionCheck check = comprehensionTriggerService.triggerFor(submission);
             comprehensionCheckId = check.getId();
-            // overallStatus stays PENDING (set at submission creation) — updated by submit service
-        } else {
-            submission.setOverallStatus(BuildSubmissionStatus.FAILED);
         }
 
         buildSubmissionRepository.save(submission);
@@ -277,12 +296,29 @@ public class BuildSubmitService {
         };
     }
 
-    private int calculatePendingXp(int attemptNumber) {
-        return switch (attemptNumber) {
-            case 1 -> BASE_BUILD_XP;
-            case 2 -> (int) (BASE_BUILD_XP * 0.75);
-            case 3 -> (int) (BASE_BUILD_XP * 0.50);
-            default -> (int) (BASE_BUILD_XP * 0.25);
-        };
+    /**
+     * pendingXp shows the student the maximum potential XP (DISTINCTION tier × attempt decay).
+     * Actual XP awarded at terminal evaluation time depends on which tier is achieved.
+     */
+    private static int calculatePendingXp(int attemptNumber) {
+        return BuildPassTier.DISTINCTION.computeXp(attemptNumber);
+    }
+
+    private void enqueuePassJobs(BuildSubmission submission) {
+        try {
+            String githubPayload = objectMapper.writeValueAsString(
+                    new GithubCommitJobPayload(submission.getId(),
+                            submission.getStudent().getId(),
+                            submission.getBuild().getId()));
+            jobQueueService.enqueue(JobType.GITHUB_COMMIT, githubPayload);
+
+            String competencyPayload = objectMapper.writeValueAsString(
+                    new CompetencySignalJobPayload(submission.getId(),
+                            submission.getStudent().getId(),
+                            submission.getBuild().getId()));
+            jobQueueService.enqueue(JobType.COMPETENCY_SIGNAL, competencyPayload);
+        } catch (JsonProcessingException e) {
+            log.error("Failed to enqueue pass jobs for submission {}: {}", submission.getId(), e.getMessage());
+        }
     }
 }

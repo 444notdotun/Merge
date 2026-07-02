@@ -12,6 +12,8 @@ public record BuildSubmitResponse(
         String overallStatus,
         int pendingXp,
         Integer xpAwarded,
+        /** Non-null when XP has been awarded at the build submit stage (MINIMUM tier, gate 3 failed). */
+        String tier,
         Instant submittedAt,
         List<BuildGateResultDto> gates,
         /** Non-null when gates 1–3 all passed and the comprehension check was triggered. */
@@ -27,6 +29,7 @@ public record BuildSubmitResponse(
                 submission.getOverallStatus().name(),
                 submission.getPendingXp(),
                 submission.getXpAwarded(),
+                submission.getTier(),
                 submission.getSubmittedAt(),
                 gates,
                 comprehensionCheckId
